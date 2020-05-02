@@ -1,8 +1,10 @@
 package lesson0107a;
 
+import javax.swing.*;
+
 public class MainApp {
     public static void main(String[] args) {
-        Window window = new Window();
+        CalculateWindow calculateWindow = new CalculateWindow();
+        calculateWindow.finalizeUIComponents();
     }
-
 }

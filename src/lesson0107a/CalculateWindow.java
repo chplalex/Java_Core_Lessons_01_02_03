@@ -4,16 +4,34 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CalculateWindow extends JFrame {
-    private JTextField textField;
+    public JTextField textField;
+    private JPanel panel;
+    private JLabel labelResult;
     private JSlider slider;
-    // TODO: place custom component creation code here
-    private JPanel panel = new JPanel();
-    private JLabel label;
+    private JLabel labelSlider;
 
     private void createUIComponents() {
+        panel = new JPanel();
         setContentPane(panel);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    public void finalizeUIComponents() {
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.addActionListener(e -> {
+            double result =
+            labelResult.setText(textField.getText());
+        });
+
+        setTitle("The Simple but Powerful Calculator");
         pack();
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (dim.width - getWidth()) / 2;
+        int y = (dim.height - getHeight()) / 2;
+        setLocation(x, y);
+
+        setResizable(false);
         setVisible(true);
 
     }
@@ -34,31 +52,67 @@ public class CalculateWindow extends JFrame {
      */
     private void $$$setupUI$$$() {
         createUIComponents();
-        panel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(7, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel.setName("");
         panel.setPreferredSize(new Dimension(400, 150));
         textField = new JTextField();
+        textField.setBackground(new Color(-855310));
+        Font textFieldFont = this.$$$getFont$$$("Arial", -1, 24, textField.getFont());
+        if (textFieldFont != null) textField.setFont(textFieldFont);
         textField.setHorizontalAlignment(0);
-        panel.add(textField, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 1, false));
-        label = new JLabel();
-        label.setHorizontalAlignment(0);
-        label.setText("Label");
-        panel.add(label, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        textField.setText("...type expression here...");
+        panel.add(textField, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        labelResult = new JLabel();
+        Font labelResultFont = this.$$$getFont$$$("Arial", -1, 24, labelResult.getFont());
+        if (labelResultFont != null) labelResult.setFont(labelResultFont);
+        labelResult.setHorizontalAlignment(0);
+        labelResult.setText("...see result here...");
+        panel.add(labelResult, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         slider = new JSlider();
-        slider.setMajorTickSpacing(4);
+        slider.setEnabled(true);
+        slider.setExtent(0);
+        slider.setInverted(false);
+        slider.setMajorTickSpacing(2);
         slider.setMaximum(4);
         slider.setMinimum(0);
         slider.setMinorTickSpacing(1);
-        slider.setName("Digits after comma");
         slider.setPaintLabels(true);
         slider.setPaintTicks(true);
-        slider.setSnapToTicks(false);
+        slider.setPaintTrack(true);
+        slider.setSnapToTicks(true);
         slider.setValue(2);
         slider.setValueIsAdjusting(false);
-        slider.putClientProperty("JSlider.isFilled", Boolean.FALSE);
-        slider.putClientProperty("Slider.paintThumbArrowShape", Boolean.FALSE);
-        slider.putClientProperty("html.disable", Boolean.FALSE);
-        panel.add(slider, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel.add(slider, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        labelSlider = new JLabel();
+        labelSlider.setHorizontalAlignment(0);
+        labelSlider.setHorizontalTextPosition(0);
+        labelSlider.setText("digits after comma");
+        panel.add(labelSlider, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JSeparator separator1 = new JSeparator();
+        panel.add(separator1, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JSeparator separator2 = new JSeparator();
+        panel.add(separator2, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JSeparator separator3 = new JSeparator();
+        panel.add(separator3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     /**

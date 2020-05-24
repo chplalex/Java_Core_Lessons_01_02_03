@@ -1,30 +1,24 @@
 package lesson0202;
 
-public class MyArraySizeException extends Exception {
-    private int lengthI;
-    private int lengthJ;
-    private int indexI;
+import static lesson0202.MainApp0202.SIZE;
 
-    public MyArraySizeException(int lengthI) {
-        this.lengthI = lengthI;
-        this.lengthJ = -1;
-        this.indexI  = -1;
-    }
+public class MyArraySizeException extends RuntimeException {
+    private int row;
+    private int col;
 
-    public MyArraySizeException(int indexI, int lengthJ) {
-        this.lengthI = -1;
-        this.lengthJ = lengthJ;
-        this.indexI  = indexI;
+    public MyArraySizeException(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     @Override
     public String toString() {
-        if (lengthI == -1) {
-            return String.format("ИСКЛЮЧЕНИЕ. Неккорректный размер массива. Строка %d соддержит %d значений (должно быть 4)",
-                    indexI, lengthJ);
+        if (col == -1) {
+            return String.format("ИСКЛЮЧЕНИЕ. Неккорректный размер массива. Колличество строк %d (должно быть %d).",
+                    row, SIZE);
         } else {
-            return String.format("ИСКЛЮЧЕНИЕ. Неккорректный размер массива. Колличество строк %d (должно быть 4)",
-                    lengthI);
+            return String.format("ИСКЛЮЧЕНИЕ. Неккорректный размер массива. Строка %d соддержит %d значений (должно быть %d).",
+                    row, col, SIZE);
         }
     }
 }

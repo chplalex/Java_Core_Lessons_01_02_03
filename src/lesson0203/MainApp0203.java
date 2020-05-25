@@ -27,18 +27,19 @@ public class MainApp0203 {
                 "Стол"};
         task011(furnitureArr); // решение с использованием массива и HashSet
         task012(furnitureArr); // решение с использованием сортированного массива и ArraysList
+        task013(furnitureArr); // решение с использованием HashMap
         task02();
     }
 
     // недостаток решения в избыточности иттераций
     public static void task011(String[] furnitureArr){
         Set<FurnitureEntry> furnitureSet = new HashSet<>();
-        for (String s: furnitureArr) {
-            furnitureSet.add(new FurnitureEntry(s));
+        for (String entry: furnitureArr) {
+            furnitureSet.add(new FurnitureEntry(entry));
         }
         for (FurnitureEntry furnitureEntry: furnitureSet) {
-            for (String s: furnitureArr) {
-                if (s.equals(furnitureEntry.getType())) {
+            for (String entry: furnitureArr) {
+                if (entry.equals(furnitureEntry.getType())) {
                     furnitureEntry.incCount();
                 }
             }
@@ -46,8 +47,8 @@ public class MainApp0203 {
 
         System.out.println("Задача № 1. Решение через массив и HashMap.");
         System.out.printf("Ответ: в списке всего %d предметов %d наименований:\n", furnitureArr.length, furnitureSet.size());
-        for (FurnitureEntry furnitureEntry: furnitureSet) {
-            System.out.println(furnitureEntry);
+        for (FurnitureEntry entry: furnitureSet) {
+            System.out.println(entry);
         }
         System.out.println("");
     }
@@ -59,12 +60,12 @@ public class MainApp0203 {
         List<FurnitureEntry> furnitureList = new ArrayList<>();
         int count = 0;
         String type = furnitureArr[0];
-        for (String s: furnitureArr) {
-            if (s.equals(type)) {
+        for (String entry: furnitureArr) {
+            if (entry.equals(type)) {
                 count++;
             } else {
                 furnitureList.add(new FurnitureEntry(type, count));
-                type = s;
+                type = entry;
                 count = 1;
             }
         }
@@ -73,6 +74,20 @@ public class MainApp0203 {
         System.out.println("Задача № 1. Решение через сортированный массив и ArrayList.");
         System.out.printf("Ответ: в списке всего %d предметов %d наименований:\n", furnitureArr.length, furnitureList.size());
         for (FurnitureEntry entry: furnitureList) {
+            System.out.println(entry);
+        }
+        System.out.println("");
+    }
+
+    // самый простой с т.з. кода вариант решения
+    public static void task013(String[] furnitureArr) {
+        Map<String, Integer> furnitureMap = new HashMap<>();
+        for(String entry: furnitureArr){
+            furnitureMap.put(entry, furnitureMap.getOrDefault(entry, 0) + 1);
+        }
+        System.out.println("Задача № 1. Решение через HashMap.");
+        System.out.printf("Ответ: в списке всего %d предметов %d наименований:\n", furnitureArr.length, furnitureMap.size());
+        for (Map.Entry<String, Integer> entry: furnitureMap.entrySet()) {
             System.out.println(entry);
         }
         System.out.println("");
@@ -96,17 +111,17 @@ public class MainApp0203 {
         };
 
         PhonesDirectory phonesDirectory = new PhonesDirectory(phoneArr);
-        System.out.println(phonesDirectory.getNameInfo("Иванов"));
-        System.out.println(phonesDirectory.getNameInfo("Петров"));
-        System.out.println(phonesDirectory.getNameInfo("Сидоров"));
-        System.out.println(phonesDirectory.getNameInfo("Фёдоров"));
+        System.out.println(phonesDirectory.get("Иванов"));
+        System.out.println(phonesDirectory.get("Петров"));
+        System.out.println(phonesDirectory.get("Сидоров"));
+        System.out.println(phonesDirectory.get("Фёдоров"));
         phonesDirectory.add("Фёдоров", "+7 (957) 597-14-53");
-        System.out.println(phonesDirectory.getNameInfo("Фёдоров"));
+        System.out.println(phonesDirectory.get("Фёдоров"));
         phonesDirectory.add("Фёдоров", "+7 (978) 256-74-82");
-        System.out.println(phonesDirectory.getNameInfo("Фёдоров"));
+        System.out.println(phonesDirectory.get("Фёдоров"));
         // попытка добавить уже имеющийся в справочнике телефон
         phonesDirectory.add("Фёдоров", "+7 (978) 256-74-82");
-        System.out.println(phonesDirectory.getNameInfo("Фёдоров"));
+        System.out.println(phonesDirectory.get("Фёдоров"));
 
     }
 }

@@ -1,47 +1,29 @@
 package lesson0203;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
-public class PhonesDirectory extends HashMap <String, ArrayList<String>>{
+public class PhonesDirectory {
+    private Map<String, Set<String>> phonesMap;
 
     public PhonesDirectory(String[][] phonesArr) {
+        phonesMap = new HashMap<>();
         for (String[] entry: phonesArr) {
-            ArrayList<String> phonesList = get(entry[0]);
-            if (phonesList == null) {
-                phonesList = new ArrayList<String>();
-                put(entry[0], phonesList);
-            }
-            phonesList.add(entry[1]);
+            add(entry[0], entry[1]);
         }
     }
 
-    public String getNameInfo(String name) {
-        if (containsKey(name)) {
-            return String.format("Имя: \"%s\", телефоны: %s.", name, get(name));
+    public String get(String name) {
+        if (phonesMap.containsKey(name)) {
+            return String.format("Имя: \"%s\", телефоны: %s.", name, phonesMap.get(name));
         } else {
             return String.format("Имя \"%s\" не найдено в справочнике.", name);
         }
     }
 
     public void add (String name, String phone) {
-        ArrayList<String> phonesList;
-        if (containsKey(name)) {
-            phonesList = get(name);
-            for (String p: phonesList) {
-                if (p.equals(phone)) {
-                    return;
-                }
-            }
-            phonesList.add(phone);
-            return;
-        }
-        phonesList = new ArrayList<>();
-        phonesList.add(phone);
-        put(name, phonesList);
+        Set<String> phonesSet = phonesMap.getOrDefault(name, new HashSet<String>());
+        phonesSet.add(phone);
+        phonesMap.put(name, phonesSet);
     }
-
-
 
 }

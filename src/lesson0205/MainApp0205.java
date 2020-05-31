@@ -2,38 +2,50 @@ package lesson0205;
 
 public class MainApp0205 {
     private static int SIZE = 10000000;
-    private static int HALF = SIZE / 2;
 
     public static void main(String[] args) throws InterruptedException {
 
         System.out.println("START");
-        method1();
-        method2();
+
+        method(1);
+
+        int count = Runtime.getRuntime().availableProcessors();
+        System.out.printf("\nВ системе обнаружено процессоров = %d.\n\n", count);
+
+        method(count);
+
         System.out.println("END");
 
     }
 
-    public static void method1() throws InterruptedException {
-        ArrThread arrThread = new ArrThread(SIZE, 0);
-        long a = System.currentTimeMillis();
-        arrThread.start();
-        arrThread.join();
-        long b = System.currentTimeMillis();
-        System.out.printf("Method1. Вычисление в 1 потоке.  Время выполнения = %d миллисекунд.\n", (b - a));
-    }
+    public static void method(int thrdCount) throws InterruptedException {
+        ArrThread[] arr = new ArrThread[thrdCount];
+        int arrSize = SIZE % thrdCount;
+        int arrDiff = 0;
 
-    public static void method2() throws InterruptedException {
-        ArrThread arrThread1 = new ArrThread(HALF, 0);
-        ArrThread arrThread2 = new ArrThread(HALF, HALF);
+        for (int i = 0; i < thrdCount; i++) {
+            arrSize += SIZE / thrdCount;
+            arr[i] = new ArrThread(arrSize, arrDiff);
+            arrDiff += arrSize;
+            arrSize = 0;
+        }
 
         long a = System.currentTimeMillis();
-        arrThread1.start();
-        arrThread2.start();
-        arrThread1.join();
-        arrThread2.join();
-        arrThread1.addArr(arrThread2.getArr());
+        for (int i = 0; i < thrdCount; i++) {
+            arr[i].start();
+        }
+        for (int i = 0; i < thrdCount; i++) {
+            arr[i].join();
+        }
         long b = System.currentTimeMillis();
-        System.out.printf("Method2. Вычисление в 2 потоках. Время выполнения = %d миллисекунд.\n", b - a);
+        System.out.printf("Число потоков  = %d. Время вычислений = %d миллисекунд.\n", thrdCount, b - a);
+
+        a = System.currentTimeMillis();
+        for (int i = 1; i < thrdCount; i++) {
+            arr[0].addArr(arr[i].getArr());
+        }
+        b = System.currentTimeMillis();
+        System.out.printf("Число массивов = %d. Время склейки    = %d миллисекунд.\n", thrdCount, b - a);
     }
 
 }

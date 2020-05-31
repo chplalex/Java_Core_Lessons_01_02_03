@@ -1,5 +1,7 @@
 package lesson0205;
 
+import java.util.Arrays;
+
 public class ArrThread extends Thread {
     private float[] arr;
     private int diff;
@@ -7,9 +9,7 @@ public class ArrThread extends Thread {
     public ArrThread(int size, int diff) {
         this.diff = diff;
         arr = new float[size];
-        for (int i = 0; i < size; i++) {
-            arr[i] = 1;
-        }
+        Arrays.fill(arr, 1);
     }
 
     public float[] getArr() {

@@ -1,8 +1,10 @@
 package lesson0307;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class MainApp0307 {
-    public static void main(String[] args) {
-        TestMaker.runTest(new MainApp0307());
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        TestMaker.start(new MainApp0307());
     }
 
     public void method01() {
@@ -13,14 +15,14 @@ public class MainApp0307 {
         System.out.println("Вызван метод method02 без аннотации");
     }
 
-    @TEST
+    @TEST (priority = 1)
     public void method03() {
-        System.out.println("Вызван метод method03 с аннотацией @TEST");
+        System.out.println("Вызван метод method03 с аннотацией @TEST P = 1");
     }
 
-    @TEST
+    @TEST (priority = 2)
     public void method04() {
-        System.out.println("Вызван метод method04 с аннотацией @TEST");
+        System.out.println("Вызван метод method04 с аннотацией @TEST P = 2");
     }
 
     @AFTER_SUITE
@@ -29,8 +31,18 @@ public class MainApp0307 {
     }
 
     @BEFORE_SUITE
+    @TEST (priority = 2)
     public void method06() {
-        System.out.println("Вызван метод method06 с аннотацией @BEFORE_SUITE");
+        System.out.println("Вызван метод method06 с аннотацией @BEFORE_SUITE и @TEST P = 2");
     }
 
+    @TEST (priority = 3)
+    public void method07() {
+        System.out.println("Вызван метод method07 с аннотацией @TEST P = 3");
+    }
+
+    @TEST (priority = 1)
+    public void method08() {
+        System.out.println("Вызван метод method08 с аннотацией @TEST P = 1");
+    }
 }

@@ -1,6 +1,6 @@
 # Project exclude paths
 /out/
 /.idea
+/test
 *.iml
-/src/test
-/src/lesson0307/
+

@@ -7,5 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface AFTER_SUITE {
+public @interface Test {
+    int priority() default 1;
 }
